@@ -393,7 +393,7 @@ exports.resetPassword2 = async(req, res, next)=>{
                         if(otp.token === token){
                             if(newPassword=== confirmPassword){
                                 const salt = await bcrypt.genSalt(10);
-                                const hashedPass = await bcrypt.hash(password, salt);
+                                const hashedPass = await bcrypt.hash(newPassword, salt);
 
                                 await User.findByIdAndUpdate(user._id, {
                                     password: hashedPass
