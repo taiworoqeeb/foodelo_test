@@ -91,7 +91,7 @@ exports.Register = async(role, req, res, next)=>{
 
        
             const mailOptions = {
-                from:  `${process.env.E_TEAM}`,
+                from:  `"Foodelo_test" <${process.env.E_TEAM}>`,
                 to: `${Newuser.email}`,
                 subject: "Foodelo",
                 html: `<h2>Hi ${Newuser.firstname}</h2>
@@ -260,7 +260,7 @@ exports.resendCode = async(req, res, next)=>{
                 
                        
                             const mailOptions = {
-                                from:  `${process.env.E_TEAM}`,
+                                from:  `"Foodelo_test" <${process.env.E_TEAM}>`,
                                 to: `${user.email}`,
                                 subject: "Foodelo",
                                 html: `<h2>Hi ${user.firstname}</h2>
@@ -292,7 +292,7 @@ exports.resendCode = async(req, res, next)=>{
                         await new_otp.save()             
                        
                             const mailOptions = {
-                                from:  `${process.env.E_TEAM}`,
+                                from: `"Foodelo_test" <${process.env.E_TEAM}>`,
                                 to: `${user.email}`,
                                 subject: "Foodelo",
                                 html: `<h2>Hi ${user.firstname}</h2>
@@ -342,7 +342,7 @@ exports.resetPassword1 =async(req, res, next)=>{
         
                
                     const mailOptions = {
-                        from:  `${process.env.E_TEAM}`,
+                        from:  `"Foodelo_test" <${process.env.E_TEAM}>`,
                         to: `${user.email}`,
                         subject: "Foodelo",
                         html: `<h2>Hi ${user.firstname}</h2>
