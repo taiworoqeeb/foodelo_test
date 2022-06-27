@@ -30,10 +30,10 @@ router.post("/signin-admin", async (req, res, next) => {
     );
   });
 
-router.post("/resendCode", userAuth, resendCode);
-router.post("/verifyEmail", userAuth, emailVerify);
-router.post("/resetPassword1",userAuth, resetPassword1);
-router.post("/resetPassword2", userAuth, resetPassword2);
+router.post("/resendCode",  resendCode);
+router.post("/verifyEmail",  emailVerify);
+router.post("/resetPassword1", resetPassword1);
+router.post("/resetPassword2", resetPassword2);
 router.post("/addProduct", userAuth, addProduct);
 router.get("/homepage", userAuth, getProduct);
 
