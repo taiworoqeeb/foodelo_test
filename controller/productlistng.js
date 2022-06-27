@@ -12,7 +12,7 @@ exports.addProduct = async(req, res, next)=>{
 
         const saved_product  = await new_product.save();
 
-        res.statu(201).json({
+        res.status(201).json({
             status: true,
             message: "Product added successfully",
             data: saved_product
