@@ -41,7 +41,7 @@ router.post("/addtocart/:productId", userAuth, addCartItem);
 router.delete("/removefromcart/:cartitemId", userAuth, removeCartItem);
 router.get("/getCart", userAuth, getCart);
 router.get("/checkout/pay", userAuth, order);
-router.get("/getAllOrder", userAuth, getAllOrder);
+router.get("/getAllOrder", userAuth, checkRole(["admin"]) ,getAllOrder);
 
 module.exports = router;
 
