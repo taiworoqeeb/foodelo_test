@@ -172,7 +172,19 @@ exports.order = async(req, res, next)=>{
                 });
 
                 const ne = await new_order.save();
-                const order = await Order.findById(ne._id)
+                const order = await Order.findById(ne._id).populate(["user",
+                {
+                    path: "cart",
+                    populate:{
+                        path: "cartItem", 
+                        model: "cartitem",
+                        populate:{
+                            path: "product", 
+                            model: "products"
+                        }
+                    }
+                }
+            ])
                  
 
                 res.status(200).json({
