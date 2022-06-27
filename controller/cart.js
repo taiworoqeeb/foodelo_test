@@ -7,6 +7,9 @@ exports.addCartItem = async(req, res, next)=>{
     const productId = req.params.productId;
     var {quantity} = req.body;
     try {
+        if(!quantity || quantity === undefined || quantity === null){
+            quantity = 1
+        }
         await Product.findById(productId)
         .then(async(product)=>{
             if(product){
