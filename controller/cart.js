@@ -16,7 +16,7 @@ exports.addCartItem = async(req, res, next)=>{
                     if(cartitem){
                         await CartItem.findByIdAndUpdate(cartitem._id, {
                             quantity: quantity,
-                            price: product.price * quantity
+                            price: (product.price * quantity)
                         })
 
                             const cart = await Cart.findOne({user: req.user.id})
@@ -38,7 +38,7 @@ exports.addCartItem = async(req, res, next)=>{
                         const item = new CartItem({
                             product: product._id,
                             quantity: quantity,
-                            price: product.price * quantity
+                            price: (product.price * quantity)
                         })
         
                         const new_item = await item.save();
