@@ -44,7 +44,7 @@ exports.addCartItem = async(req, res, next)=>{
                         const new_item = await item.save();
 
                         await Cart.findOneAndUpdate({user: req.user.id}, {
-                            $push: { cartitem: new_item._id}
+                            $push: { cartItem: new_item._id}
                         }, {new: true}).catch((err) => console.log(err));
 
                         const cart = await Cart.findOne({user: req.user.id})
