@@ -1,6 +1,7 @@
 const CartItem = require("../model/CartItem");
 const Cart = require("../model/Carts");
 const Product = require("../model/product");
+const Order = require("../model/Order");
 
 
 exports.addCartItem = async(req, res, next)=>{
@@ -137,6 +138,91 @@ exports.getCart = async(req, res, next)=>{
             
         })
         
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+        next(error);
+    }
+}
+
+exports.order = async(req, res, next)=>{
+    try {
+        await Cart.findOne({
+            user: req.user.id
+        })
+        .populate(["user",{
+            path: "cartItem",
+            populate:{
+                path: "product", 
+                model: "products"
+                }
+        } 
+            
+        ])
+        .then(async(cart)=>{
+            if(cart){
+                var total_price = 0;
+                for(var i=0; i<cart.cartItem.length; i++){
+                    total_price = total_price + cart.cartItem[i].price
+                }
+                const new_order = new Order({
+                    user: req.user.id,
+                    cart: cart._id,
+                    total_price: total_price
+                });
+
+                const ne = await new_order.save();
+                const order = await Order.findById(ne._id)
+                 
+
+                res.status(200).json({
+                    status: true,
+                    message: "Order successful",
+                    data: order
+                })
+            }else{
+                res.status(200).json({
+                    status: true,
+                    message: "Order failed"
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+        next(error);
+    }
+}
+
+exports.getAllOrder = async(req, res, next)=>{
+    try {
+        await Order.find()
+        .populate(["user",
+            {
+                path: "cart",
+                populate:{
+                    path: "cartItem", 
+                    model: "cartitem",
+                    populate:{
+                        path: "product", 
+                        model: "products"
+                    }
+                }
+            }
+        ])
+        .then(async(order)=>{
+            if(order){
+                res.json({
+                    status: true,
+                    data: order
+                })
+            }else{
+                res.json({
+                    status: false,
+                    message: "No order found"
+                })
+            }
+        })
     } catch (error) {
         console.log(error);
         res.json(error)
