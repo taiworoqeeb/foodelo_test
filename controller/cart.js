@@ -5,7 +5,7 @@ const Product = require("../model/product");
 
 exports.addCartItem = async(req, res, next)=>{
     const productId = req.params.productId;
-    const quantity = req.body;
+    var quantity = req.body;
     try {
         await Product.findById(productId)
         .then(async(product)=>{
@@ -15,7 +15,7 @@ exports.addCartItem = async(req, res, next)=>{
                 }).then(async(cartitem)=>{
                     if(cartitem){
                         await CartItem.findByIdAndUpdate(cartitem._id, {
-                            quantity,
+                            quantity: quantity,
                             price: product.price * quantity
                         })
 
@@ -37,7 +37,7 @@ exports.addCartItem = async(req, res, next)=>{
                     }else{
                         const item = new CartItem({
                             product: product._id,
-                            quantity,
+                            quantity: quantity,
                             price: product.price * quantity
                         })
         
