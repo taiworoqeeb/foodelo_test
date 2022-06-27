@@ -69,7 +69,8 @@ exports.Register = async(role, req, res, next)=>{
             password: hashedPass,
             phone_no,
             address,
-            emailVerified: verify
+            emailVerified: verify,
+            role: role
         });
         const Newuser = await user.save();
 
