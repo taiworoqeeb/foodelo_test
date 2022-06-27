@@ -4,6 +4,7 @@ const app = express();
 const Session = require('cookie-session');
 const passport = require('passport');
 const router = require('./routes/routes');
+const cors = require("cors");
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const cookieParser = require('cookie-parser')
@@ -19,6 +20,12 @@ app.use(Session({
   secure: (process.env.NODE_ENV !== 'development')
   },
 ));
+app.use(cors({
+  origin: '*',
+  credentials: true,
+  methods: ['POST', 'GET', 'OPTIONS', 'HEAD', 'DELETE', 'PUT', 'PATCH'],
+  exposedHeaders: ["*","set-cookie", "Authorization"]
+}));
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json())
